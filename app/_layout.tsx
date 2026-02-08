@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { QueryProvider } from '@/shared/providers/query-provider';
+import { useThemeColor } from '@/shared/index';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -24,7 +25,9 @@ function RootNavigator() {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  
+  const backgroundColor = useThemeColor({}, 'background');
+  const tintColor = useThemeColor({}, 'tint');
+
   // Initialize MSW in development mode and wait for it to be ready
   const isMSWReady = useMSW();
 
@@ -38,8 +41,8 @@ export default function RootLayout() {
   // Show loading indicator while MSW initializes (in dev mode)
   if (!isMSWReady) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+      <View style={[styles.loadingContainer, {backgroundColor: backgroundColor}]}>
+        <ActivityIndicator size="large" color={tintColor} />
       </View>
     );
   }
@@ -59,6 +62,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
 });

@@ -1,3 +1,4 @@
+import { ActivityList } from '@/features/activity';
 import { BalanceCard, useMerchantData } from '@/features/merchant';
 import { LoadingState, ScreenContainer, ScreenHeader, ScreenScroll, ScreenSection } from '@/shared/components';
 import { ErrorState } from '@/shared/components/ui/error-state';
@@ -26,6 +27,9 @@ export default function HomeScreen() {
     return null;
   }
 
+  // Show first 3 activity items on home screen
+  const recentActivity = data.activity.slice(0, 3);
+
   return (
     <ScreenContainer testID="home-screen">
       <ScreenScroll>
@@ -36,6 +40,12 @@ export default function HomeScreen() {
             availableBalance={data.available_balance}
             pendingBalance={data.pending_balance}
             currency={data.currency}
+          />
+        </ScreenSection>
+
+        <ScreenSection title="Recent Activity">
+          <ActivityList
+            items={recentActivity}
           />
         </ScreenSection>
 
