@@ -1,32 +1,15 @@
-import { StyleSheet } from 'react-native';
-
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import { ScreenContainer, ScreenScroll, ScreenHeader } from '@/shared/components';
 
 export default function PayoutsScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={styles.header}>
-        <ThemedText type="title">Initiate Payout</ThemedText>
-      </ThemedView>
-
-      <ThemedView style={styles.section}>
-        <ThemedText type="subtitle">Payout Amount</ThemedText>
-      </ThemedView>
-
-    </ThemedView>
+    <ScreenContainer testID="payout-screen">
+      <ScreenScroll>
+        <ScreenHeader title="Initiate Payout" />
+  
+        {/* <ScreenSection title="Payout Amount">
+        </ScreenSection> */}
+  
+      </ScreenScroll>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  section: {
-    marginBottom: 24,
-  },
-});
