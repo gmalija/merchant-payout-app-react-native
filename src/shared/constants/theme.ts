@@ -5,27 +5,71 @@
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
+  // Primary Colors
+  primary: '#1976D2',
+  primaryLight: '#42A5F5',
+  primaryDark: '#0D47A1',
+
+  // Semantic Colors - WCAG AA compliance
+  success: '#4caf50',
+  successLight: '#81C784',
+  successDark: '#2E7D32',
+
+  error: '#C62828',
+  errorLight: '#EF5350',
+  errorDark: '#B71C1C',
+
+  warning: '#ff9800',
+  warningLight: '#FFB74D',
+  warningDark: '#F57C00',
+
+  info: '#2196F3',
+  infoLight: '#64B5F6',
+  infoDark: '#1976D2',
+
+  // Neutral Colors (Light Theme) - WCAG AA compliance
   light: {
+    background: '#FFFFFF',
+    surface: '#F5F5F5',
+    surfaceVariant: '#EEEEEE',
     text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
+    textSecondary: '#616161',
+    border: '#E0E0E0',
+    divider: 'rgba(0, 0, 0, 0.12)',
+    disabled: '#BDBDBD',
+    disabledText: '#757575',
+    tint: '#1976D2',
     icon: '#687076',
     tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    tabIconSelected: '#1976D2',
+    errorBackground: '#FFEBEE',
+    infoBackground: '#E3F2FD',
+    successBackground: '#E8F5E9',
+    warningBackground: '#FFF3E0',
   },
+
+  // Neutral Colors (Dark Theme) - WCAG AA compliance
   dark: {
+    background: '#121212',
+    surface: '#1E1E1E',
+    surfaceVariant: '#2C2C2C',
     text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
+    textSecondary: '#A8A8A8',
+    border: '#444444',
+    divider: 'rgba(255, 255, 255, 0.12)',
+    disabled: '#424242',
+    disabledText: '#999999',
+    tint: '#fff',
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    tabIconSelected: '#fff',
+    errorBackground: '#3D1F1F',
+    infoBackground: '#1A2A3A',
+    successBackground: '#1F3D1F',
+    warningBackground: '#3D2F1F',
   },
-};
+} as const;
 
 export const Fonts = Platform.select({
   ios: {
@@ -59,4 +103,39 @@ export const Spacing = {
   base: 16,
   lg: 20,
   xl: 24
+} as const;
+
+export const BorderRadius = {
+  none: 0,
+  sm: 4,
+  base: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  full: 9999,
+} as const;
+
+export const Typography = {
+  fontSize: {
+    xs: 12,
+    sm: 13,
+    base: 14,
+    md: 16,
+    lg: 18,
+    xl: 20,
+    '2xl': 24,
+    '3xl': 28,
+    '4xl': 32,
+  },
+  fontWeight: {
+    regular: '400' as const,
+    medium: '500' as const,
+    semibold: '600' as const,
+    bold: '700' as const,
+  },
+  lineHeight: {
+    tight: 1.2,
+    normal: 1.5,
+    relaxed: 1.75,
+  },
 } as const;
