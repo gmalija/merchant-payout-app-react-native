@@ -1,14 +1,12 @@
 import { ScreenContainer, ScreenScroll, ScreenHeader } from '@/shared/components';
+import { PayoutFlow } from '@/features/payouts';
 
 export default function PayoutsScreen() {
   return (
-    <ScreenContainer testID="payout-screen">
+    <ScreenContainer>
       <ScreenScroll>
-        <ScreenHeader title="Initiate Payout" />
-  
-        {/* <ScreenSection title="Payout Amount">
-        </ScreenSection> */}
-  
+        <ScreenHeader title="Send Payout" />
+        <PayoutFlow />
       </ScreenScroll>
     </ScreenContainer>
   );
