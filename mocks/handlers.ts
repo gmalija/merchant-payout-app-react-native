@@ -2,7 +2,7 @@
  * MSW Request Handlers
  */
 import { http, HttpResponse } from 'msw';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../src/shared/constants';
 import {
   createPayout,
   getPayoutById,
@@ -16,7 +16,7 @@ import type {
   MerchantDataResponse,
   CreatePayoutRequest,
   PaginatedActivityResponse,
-} from '../types/api';
+} from '@/shared/types/api';
 
 /**
  * Helper function to log MSW requests with color coding

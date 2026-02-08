@@ -7,7 +7,7 @@ import type {
   PayoutStatus,
   Currency,
   PaginatedActivityResponse,
-} from '../types/api';
+} from '@/shared/types/api';
 
 // In-memory store for payout states
 const payoutStore = new Map<string, { payout: PayoutResponse; created_at: number }>();
