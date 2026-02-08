@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { Button, EmptyState, Divider } from '@/shared/components/ui';
 import { ActivityListItem } from './activity-list-item';
-import { Colors, BorderRadius } from '@/shared/constants';
+import { Colors, BorderRadius, Spacing } from '@/shared/constants';
 import type { ActivityItem } from '@/shared/types/api';
 
 interface ActivityListProps {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   showMoreContainer: {
-    marginTop: 12,
+    marginTop: Spacing.md,
   },
   showMoreButton: {
     backgroundColor: Colors.light.infoBackground,

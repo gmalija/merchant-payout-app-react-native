@@ -1,9 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
-import { formatCurrency } from '@/shared/utils/currency';
-import { formatDate } from '@/shared/utils/date';
+import { formatCurrency, formatDate } from '@/shared/utils';
 import type { ActivityItem } from '@/shared/types/api';
-import { Colors } from '@/shared/constants';
+import { Colors, Layout, Opacity, Spacing, Typography } from '@/shared/constants';
 
 interface ActivityDetailItemProps {
   item: ActivityItem;
@@ -63,34 +62,34 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    gap: 16,
+    paddingVertical: Spacing.base,
+    paddingHorizontal: Spacing.base,
+    gap: Layout.gap.base,
   },
   leftContent: {
     flex: 1,
-    gap: 4,
+    gap: Layout.gap.xs,
   },
   rightContent: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    gap: 4,
+    gap: Layout.gap.xs,
   },
   type: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: Typography.fontSize.md,
+    fontWeight: Typography.fontWeight.semibold,
   },
   description: {
-    fontSize: 14,
-    fontWeight: '400',
+    fontSize: Typography.fontSize.base,
+    fontWeight: Typography.fontWeight.regular,
   },
   date: {
-    fontSize: 13,
-    opacity: 0.6,
+    fontSize: Typography.fontSize.sm,
+    opacity: Opacity.secondary,
   },
   amount: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: Typography.fontSize.xl,
+    fontWeight: Typography.fontWeight.regular,
   },
   negativeAmount: {
     color: Colors.error,
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     color: Colors.success,
   },
   status: {
-    fontSize: 13,
-    opacity: 0.6,
+    fontSize: Typography.fontSize.sm,
+    opacity: Opacity.secondary,
   },
 });

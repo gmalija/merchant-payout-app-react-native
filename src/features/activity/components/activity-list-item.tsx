@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
-import { formatCurrency } from '@/shared/utils/currency';
+import { formatCurrency } from '@/shared/utils';
 import type { ActivityItem } from '@/shared/types/api';
-import { Colors } from '@/shared/constants';
+import { Colors, Layout, Opacity, Spacing, Typography } from '@/shared/constants';
 
 interface ActivityListItemProps {
   item: ActivityItem;
@@ -42,23 +42,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 16,
-    gap: 12,
+    paddingVertical: Spacing.base,
+    gap: Layout.gap.md,
   },
   content: {
     flex: 1,
   },
   description: {
-    fontSize: 14,
-    marginBottom: 2,
+    fontSize: Typography.fontSize.base,
+    marginBottom: Spacing.xs,
   },
   date: {
-    fontSize: 12,
-    opacity: 0.6,
+    fontSize: Typography.fontSize.xs,
+    opacity: Opacity.secondary,
   },
   amount: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: Typography.fontSize.base,
+    fontWeight: Typography.fontWeight.semibold,
   },
   negativeAmount: {
     color: Colors.error,
