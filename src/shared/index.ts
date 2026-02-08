@@ -10,3 +10,6 @@ export * from './types/api';
 
 // Utils
 export * from './utils';
+
+// Test utilities
+export * from './test-utils/test-wrapper';
