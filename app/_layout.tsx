@@ -5,6 +5,13 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/shared/hooks/use-color-scheme';
 import { useMSW } from '../mocks/useMSW';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { QueryProvider } from '@/shared/providers/query-provider';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 function RootNavigator() {
   return (
@@ -21,15 +28,37 @@ export default function RootLayout() {
   // Initialize MSW in development mode and wait for it to be ready
   const isMSWReady = useMSW();
 
-  // Don't render the app until MSW is ready (in dev mode)
+  useEffect(() => {
+    if (isMSWReady) {
+      // Hide the splash screen once MSW is ready
+      SplashScreen.hideAsync();
+    }
+  }, [isMSWReady]);
+
+  // Show loading indicator while MSW initializes (in dev mode)
   if (!isMSWReady) {
-    return null;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007AFF" />
+      </View>
+    );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <QueryProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <RootNavigator />
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </QueryProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+});
