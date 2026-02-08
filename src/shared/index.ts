@@ -7,3 +7,6 @@ export * from './hooks/use-theme-color';
 
 // Types
 export * from './types/api';
+
+// Utils
+export * from './utils';
