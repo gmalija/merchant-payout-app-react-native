@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
 import { Button } from './button';
-import { Colors } from '@/shared/constants';
+import { Colors, Spacing } from '@/shared/constants';
 
 interface ErrorStateProps {
   message: string;
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 32,
+    padding: Spacing.xl + Spacing.sm,
   },
   errorText: {
     color: Colors.error,
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: Spacing.base,
   },
 });

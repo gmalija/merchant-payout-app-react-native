@@ -1,6 +1,6 @@
 import { StyleSheet, Pressable, ActivityIndicator, type PressableProps, type ViewStyle } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
-import { Colors, Spacing, BorderRadius, Typography } from '@/shared/constants';
+import { Colors, Spacing, BorderRadius, Typography, Opacity, MinTouchTarget, BorderWidth } from '@/shared/constants';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 export type ButtonSize = 'small' | 'medium' | 'large';
@@ -60,7 +60,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator
           size="small"
-          color={variant === 'primary' ? '#fff' : Colors.primary}
+          color={variant === 'primary' ? Colors.white : Colors.primary}
           accessibilityLabel="Loading"
         />
       ) : (
@@ -90,41 +90,41 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   secondary: {
-    backgroundColor: '#757575',
+    backgroundColor: Colors.gray[600],
   },
   outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
+    backgroundColor: Colors.transparent,
+    borderWidth: BorderWidth.thin,
     borderColor: Colors.primary,
   },
   ghost: {
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.transparent,
   },
-  // Sizes - Updated for 44pt minimum touch target
+  // Sizes - Updated for minimum touch target
   size_small: {
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm + 2,
-    minHeight: 44,
+    paddingVertical: Spacing.sm + Spacing.xs / 2,
+    minHeight: MinTouchTarget.small,
   },
   size_medium: {
     paddingHorizontal: Spacing.base,
-    paddingVertical: Spacing.sm + 4,
-    minHeight: 44,
+    paddingVertical: Spacing.sm + Spacing.xs,
+    minHeight: MinTouchTarget.small,
   },
   size_large: {
     paddingHorizontal: Spacing.xl,
-    paddingVertical: Spacing.md + 2,
-    minHeight: 48,
+    paddingVertical: Spacing.md + Spacing.xs / 2,
+    minHeight: MinTouchTarget.medium,
   },
   // States
   disabled: {
-    opacity: 1,
+    opacity: Opacity.full,
   },
   disabledPrimary: {
     backgroundColor: Colors.light.surfaceVariant,
   },
   pressed: {
-    opacity: 0.8,
+    opacity: Opacity.pressed,
   },
   fullWidth: {
     width: '100%',
@@ -137,10 +137,10 @@ const styles = StyleSheet.create({
     fontWeight: Typography.fontWeight.semibold,
   },
   text_primary: {
-    color: '#fff',
+    color: Colors.white,
   },
   text_secondary: {
-    color: '#fff',
+    color: Colors.white,
   },
   text_outline: {
     color: Colors.primary,

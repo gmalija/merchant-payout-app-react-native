@@ -1,5 +1,6 @@
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
+import { Spacing, Opacity } from '@/shared/constants';
 
 interface LoadingStateProps {
   message?: string;
@@ -31,10 +32,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 32,
+    padding: Spacing.xl + Spacing.sm,
   },
   text: {
-    marginTop: 12,
-    opacity: 0.7,
+    marginTop: Spacing.md,
+    opacity: Opacity.secondary,
   },
 });

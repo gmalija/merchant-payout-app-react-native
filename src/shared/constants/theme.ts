@@ -6,6 +6,25 @@
 import { Platform } from 'react-native';
 
 export const Colors = {
+  // Base Colors
+  white: '#FFFFFF',
+  black: '#000000',
+  transparent: 'transparent',
+
+  // Shared Neutral Grays
+  gray: {
+    50: '#FAFAFA',
+    100: '#F5F5F5',
+    200: '#EEEEEE',
+    300: '#E0E0E0',
+    400: '#BDBDBD',
+    500: '#9E9E9E',
+    600: '#757575',
+    700: '#616161',
+    800: '#424242',
+    900: '#333333',
+  },
+
   // Primary Colors
   primary: '#1976D2',
   primaryLight: '#42A5F5',
@@ -27,6 +46,9 @@ export const Colors = {
   info: '#2196F3',
   infoLight: '#64B5F6',
   infoDark: '#1976D2',
+
+  // Link color
+  link: '#0a7ea4',
 
   // Neutral Colors (Light Theme) - WCAG AA compliance
   light: {
@@ -137,5 +159,47 @@ export const Typography = {
     tight: 1.2,
     normal: 1.5,
     relaxed: 1.75,
+  },
+} as const;
+
+export const Opacity = {
+  disabled: 0.5,
+  secondary: 0.7,
+  pressed: 0.8,
+  full: 1,
+} as const;
+
+export const IconSize = {
+  xs: 16,
+  sm: 18,
+  base: 24,
+  md: 32,
+  lg: 48,
+  xl: 64,
+} as const;
+
+export const BorderWidth = {
+  none: 0,
+  thin: 1,
+  medium: 2,
+  thick: 3,
+} as const;
+
+export const MinTouchTarget = {
+  small: 44,
+  medium: 48,
+  large: 56,
+} as const;
+
+export const Layout = {
+  headerHeight: 250,
+  scrollThrottle: 16,
+  gap: {
+    xs: 4,
+    sm: 6,
+    base: 8,
+    md: 12,
+    lg: 16,
+    xl: 24,
   },
 } as const;
