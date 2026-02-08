@@ -2,9 +2,10 @@ import { ActivityList } from '@/features/activity';
 import { BalanceCard, useMerchantData } from '@/features/merchant';
 import { LoadingState, ScreenContainer, ScreenHeader, ScreenScroll, ScreenSection } from '@/shared/components';
 import { ErrorState } from '@/shared/components/ui/error-state';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
-
+  const router = useRouter();
   const { data, isLoading, error, refetch } = useMerchantData();
 
   if (isLoading) {
@@ -46,6 +47,7 @@ export default function HomeScreen() {
         <ScreenSection title="Recent Activity">
           <ActivityList
             items={recentActivity}
+            onShowMore={() => router.push('/modal-activities')}
           />
         </ScreenSection>
 

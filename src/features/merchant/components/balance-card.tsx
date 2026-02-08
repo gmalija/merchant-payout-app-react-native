@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
-import { formatCurrency } from '@/shared/utils/currency';
+import { formatCurrency } from '@/shared/utils';
 import type { Currency } from '@/shared/types/api';
 
 interface BalanceCardProps {
