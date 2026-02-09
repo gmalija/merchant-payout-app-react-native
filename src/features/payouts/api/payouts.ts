@@ -1,12 +1,16 @@
 import { API_BASE_URL } from '@/shared/constants';
 import type { CreatePayoutRequest, PayoutResponse } from '@/shared/types/api';
+import { getDeviceId } from '@/shared/utils/device';
 
 export async function createPayout(
   request: CreatePayoutRequest
 ): Promise<PayoutResponse> {
 
-  const payload: CreatePayoutRequest = {
+  const deviceId = getDeviceId();
+
+  const payloadWithDeviceId: CreatePayoutRequest = {
     ...request,
+    device_id: deviceId,
   };
 
   const response = await fetch(`${API_BASE_URL}/api/payouts`, {
@@ -14,7 +18,7 @@ export async function createPayout(
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(payloadWithDeviceId),
   });
 
   if (!response.ok) {
