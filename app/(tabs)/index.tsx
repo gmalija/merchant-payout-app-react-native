@@ -1,35 +1,57 @@
-import { StyleSheet } from 'react-native';
-
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import { ActivityList } from '@/features/activity';
+import { BalanceCard, useMerchantData } from '@/features/merchant';
+import { LoadingState, ScreenContainer, ScreenHeader, ScreenScroll, ScreenSection } from '@/shared/components';
+import { ErrorState } from '@/shared/components/ui/error-state';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <ThemedView style={styles.header}>
-        <ThemedText type="title">Business Account</ThemedText>
-      </ThemedView>
-      
-      <ThemedView style={styles.section}>
-        <ThemedText type="subtitle">Account Balance</ThemedText>
-      </ThemedView>
+  const router = useRouter();
+  const { data, isLoading, error, refetch } = useMerchantData();
 
-      <ThemedView style={styles.section}>
-        <ThemedText type="subtitle">Recent Activity</ThemedText>
-      </ThemedView>
-    </ThemedView>
+  if (isLoading) {
+    return (
+      <ScreenContainer>
+        <LoadingState />
+      </ScreenContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <ScreenContainer>
+        <ErrorState message={error.message} onRetry={() => refetch()} />
+      </ScreenContainer>
+    );
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  // Show first 3 activity items on home screen
+  const recentActivity = data.activity.slice(0, 3);
+
+  return (
+    <ScreenContainer testID="home-screen">
+      <ScreenScroll>
+        <ScreenHeader title="Business Account" />
+
+        <ScreenSection title="Account Balance">
+          <BalanceCard
+            availableBalance={data.available_balance}
+            pendingBalance={data.pending_balance}
+            currency={data.currency}
+          />
+        </ScreenSection>
+
+        <ScreenSection title="Recent Activity">
+          <ActivityList
+            items={recentActivity}
+            onShowMore={() => router.push('/modal-activities')}
+          />
+        </ScreenSection>
+
+      </ScreenScroll>
+    </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  section: {
-    marginBottom: 24,
-  },
-});

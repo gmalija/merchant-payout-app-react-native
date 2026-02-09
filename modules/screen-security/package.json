@@ -1,0 +1,37 @@
+{
+  "name": "screen-security",
+  "version": "0.1.0",
+  "description": "Native module for screen security: biometry, device id and screenshot protection",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "expo-module build",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "test": "expo-module test",
+    "prepare": "expo-module prepare",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "expo-module": "expo-module",
+    "open:ios": "xed example/ios",
+    "open:android": "open -a \"Android Studio\" example/android"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "screen-security",
+    "ScreenSecurity"
+  ],
+  "repository": "https://github.com/gmalija/screen-security",
+  "bugs": {
+    "url": "https://github.com/gmalija/screen-security/issues"
+  },
+  "author": "Guillermo Marco <guillermomarcoalija@gmail.com> (https://github.com/gmalija)",
+  "license": "MIT",
+  "homepage": "https://github.com/gmalija/screen-security#readme",
+  "dependencies": {},
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}
