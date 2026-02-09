@@ -1,16 +1,23 @@
 package expo.modules.screensecurity
 
+import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.provider.Settings
-import expo.modules.kotlin.modules.Module
-import expo.modules.kotlin.modules.ModuleDefinition
+import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import expo.modules.kotlin.Promise
+import expo.modules.kotlin.modules.Module
+import expo.modules.kotlin.modules.ModuleDefinition
 
 class ScreenSecurityModule : Module() {
+  private var screenCaptureCallback: Activity.ScreenCaptureCallback? = null
+  private var listenerCount: Int = 0
+  private var isObserverRegistered: Boolean = false
+
   // Each module class must implement the definition function. The definition consists of components
   // that describes the module's functionality and behavior.
   // See https://docs.expo.dev/modules/module-api for more details about available components.
@@ -20,12 +27,29 @@ class ScreenSecurityModule : Module() {
     // The module will be accessible from `requireNativeModule('ScreenSecurity')` in JavaScript.
     Name("ScreenSecurity")
 
+    // Define events that can be sent to JavaScript
+    Events("onScreenshotTaken")
+
     Function("getDeviceId") {
       return@Function getDeviceIdentifier()
     }
 
     AsyncFunction("isBiometricAuthenticated") { promise: Promise ->
       authenticateWithBiometrics(promise)
+    }
+
+    // Called when a JS listener subscribes to the event
+    Function("startObservingScreenshots") {
+      incrementListenerCount()
+    }
+
+    // Called when a JS listener unsubscribes from the event
+    Function("stopObservingScreenshots") {
+      decrementListenerCount()
+    }
+
+    OnDestroy {
+      removeScreenshotDetection()
     }
 
   }
@@ -130,6 +154,74 @@ class ScreenSecurityModule : Module() {
     // Show biometric prompt
     activity.runOnUiThread {
       biometricPrompt.authenticate(promptInfo)
+    }
+  }
+
+  // MARK: - Screenshot Detection
+
+  private fun incrementListenerCount() {
+    listenerCount++
+
+    if (listenerCount == 1 && !isObserverRegistered) {
+      setupScreenshotDetection()
+    }
+  }
+
+  private fun decrementListenerCount() {
+    listenerCount = maxOf(0, listenerCount - 1)
+
+    if (listenerCount == 0 && isObserverRegistered) {
+      removeScreenshotDetection()
+    }
+  }
+
+  private fun setupScreenshotDetection() {
+    if (isObserverRegistered) return
+
+    // Screenshot detection is only available on Android 14 (API 34) and higher
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+      try {
+        registerScreenCaptureCallback()
+        isObserverRegistered = true
+      } catch (e: SecurityException) {
+        // DETECT_SCREEN_CAPTURE permission not granted or not available
+        // This is OK - screenshot detection is optional
+      } catch (e: Exception) {
+        // Any other error - silently ignore
+      }
+    }
+  }
+
+  @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+  private fun registerScreenCaptureCallback() {
+    val activity = appContext.currentActivity ?: return
+
+    screenCaptureCallback = Activity.ScreenCaptureCallback {
+      // Send event to JavaScript layer when screenshot is taken
+      sendEvent("onScreenshotTaken", emptyMap<String, Any>())
+    }
+
+    activity.registerScreenCaptureCallback(
+      ContextCompat.getMainExecutor(context),
+      screenCaptureCallback!!
+    )
+  }
+
+  private fun removeScreenshotDetection() {
+    if (!isObserverRegistered) return
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+      unregisterScreenCaptureCallback()
+    }
+    isObserverRegistered = false
+  }
+
+  @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+  private fun unregisterScreenCaptureCallback() {
+    val activity = appContext.currentActivity ?: return
+    screenCaptureCallback?.let {
+      activity.unregisterScreenCaptureCallback(it)
+      screenCaptureCallback = null
     }
   }
 
