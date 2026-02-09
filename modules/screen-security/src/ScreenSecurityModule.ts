@@ -1,12 +1,7 @@
 import { NativeModule, requireNativeModule } from 'expo';
 
-import { ScreenSecurityModuleEvents } from './ScreenSecurity.types';
-
-declare class ScreenSecurityModule extends NativeModule<ScreenSecurityModuleEvents> {
-  PI: number;
-  hello(): string;
-  setValueAsync(value: string): Promise<void>;
+export interface ScreenSecurityModuleInterface extends NativeModule {
+  getDeviceId(): string;
 }
 
-// This call loads the native module object from the JSI.
-export default requireNativeModule<ScreenSecurityModule>('ScreenSecurity');
+export default requireNativeModule<ScreenSecurityModuleInterface>('ScreenSecurity');

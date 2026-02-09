@@ -7,10 +7,13 @@
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "prebuild": "expo prebuild",
+    "prebuild:clean": "expo prebuild --clean",
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "clean": "rm -rf node_modules yarn.lock package-lock.json .expo .expo-shared && npm cache clean --force"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -42,6 +45,7 @@
     "react-native-url-polyfill": "^3.0.0",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.5.1",
+    "screen-security": "file:./modules/screen-security",
     "tslib": "^2.8.1",
     "zod": "^4.3.6"
   },

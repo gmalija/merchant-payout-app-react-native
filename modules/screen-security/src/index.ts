@@ -1,5 +1,8 @@
-// Reexport the native module. On web, it will be resolved to ScreenSecurityModule.web.ts
-// and on native platforms to ScreenSecurityModule.ts
-export { default } from './ScreenSecurityModule';
-export { default as ScreenSecurityView } from './ScreenSecurityView';
-export * from  './ScreenSecurity.types';
+import ScreenSecurityModule from './ScreenSecurityModule';
+
+/**
+ * Get the unique device identifier
+ */
+export function getDeviceId(): string {
+  return ScreenSecurityModule.getDeviceId();
+}
