@@ -6,6 +6,10 @@ import { createPayout } from '../payouts';
 import { server } from '@/mocks/server.node';
 import type { CreatePayoutRequest } from '@/shared/types/api';
 
+jest.mock('@/shared/utils/device', () => ({
+  getDeviceId: jest.fn().mockReturnValue('test-device-id'),
+}));
+
 describe('createPayout API - Error Handling', () => {
   beforeAll(() => {
     server.listen({ onUnhandledRequest: 'error' });
