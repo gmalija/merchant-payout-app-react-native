@@ -32,3 +32,31 @@ function getNativeModule() {
 export function getDeviceId(): string {
   return getNativeModule().getDeviceId();
 }
+
+/**
+ * Authenticate user with biometric authentication
+ * @returns Promise that resolves to true if authentication succeeds, false if cancelled
+ * @throws Error if biometrics are not available or not enrolled
+ *
+ * On iOS: Uses Face ID or Touch ID
+ * On Android: Uses Fingerprint or Face authentication
+ *
+ * @example
+ * ```typescript
+ * import * as ScreenSecurity from 'screen-security';
+ *
+ * try {
+ *   const authenticated = await ScreenSecurity.isBiometricAuthenticated();
+ *   if (authenticated) {
+ *     console.log('Authentication successful');
+ *   } else {
+ *     console.log('Authentication cancelled');
+ *   }
+ * } catch (error) {
+ *   console.error('Biometric authentication failed:', error);
+ * }
+ * ```
+ */
+export function isBiometricAuthenticated(): Promise<boolean> {
+  return getNativeModule().isBiometricAuthenticated();
+}
