@@ -11,6 +11,13 @@ import { useMerchantData } from '@/features/merchant';
 jest.mock('../../hooks/use-create-payout');
 jest.mock('@/features/merchant');
 
+// Mock screen-security module
+jest.mock('screen-security', () => ({
+  addScreenshotListener: jest.fn(() => ({
+    remove: jest.fn(),
+  })),
+}));
+
 const mockUseCreatePayout = useCreatePayout as jest.MockedFunction<typeof useCreatePayout>;
 const mockUseMerchantData = useMerchantData as jest.MockedFunction<typeof useMerchantData>;
 
