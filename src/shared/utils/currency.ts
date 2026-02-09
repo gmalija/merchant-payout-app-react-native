@@ -27,6 +27,15 @@ export function toLowestDenomination(amount: number): number {
 }
 
 /**
+ * Get currency symbol for a given currency code
+ * @param currency - Currency code
+ * @returns Currency symbol (e.g., "£", "€")
+ */
+export function getCurrencySymbol(currency: Currency): string {
+  return CURRENCY_SYMBOLS[currency] || currency;
+}
+
+/**
  * Format currency amount with symbol
  * @param amount - Amount in lowest denomination (e.g., pence) or major unit (e.g., pounds)
  * @param currency - Currency code
@@ -38,7 +47,7 @@ export function formatCurrency(
   currency: Currency,
   isLowestDenomination: boolean = true
 ): string {
-  const symbol = CURRENCY_SYMBOLS[currency] || currency;
+  const symbol = getCurrencySymbol(currency);
   const majorAmount = isLowestDenomination ? fromLowestDenomination(amount) : amount;
 
   // Format with commas and 2 decimal places

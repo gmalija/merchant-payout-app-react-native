@@ -169,15 +169,6 @@ export const Opacity = {
   full: 1,
 } as const;
 
-export const IconSize = {
-  xs: 16,
-  sm: 18,
-  base: 24,
-  md: 32,
-  lg: 48,
-  xl: 64,
-} as const;
-
 export const BorderWidth = {
   none: 0,
   thin: 1,
@@ -201,5 +192,22 @@ export const Layout = {
     md: 12,
     lg: 16,
     xl: 24,
+  },
+} as const;
+
+export const ComponentSizes = {
+  input: {
+    sm: 36,
+    base: 44,
+    md: 48,
+    lg: 52,
+  },
+  icon: {
+    xs: 16,
+    sm: 18,
+    base: 24,
+    md: 32,
+    lg: 48,
+    xl: 64,
   },
 } as const;

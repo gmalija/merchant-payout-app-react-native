@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/shared/components/ui/themed-text';
 import { IconSymbol } from './icon-symbol';
-import { Spacing, IconSize, Opacity, Colors } from '@/shared/constants';
+import { Spacing, Opacity, Colors, ComponentSizes } from '@/shared/constants';
 
 interface EmptyStateProps {
   message: string;
@@ -22,7 +22,7 @@ export function EmptyState({
       accessibilityRole="text"
       accessibilityLabel={`Empty state: ${message}`}
     >
-      {icon && <IconSymbol name={icon as any} size={IconSize.lg} color={Colors.gray[500]} />}
+      {icon && <IconSymbol name={icon as any} size={ComponentSizes.icon.lg} color={Colors.gray[500]} />}
       <ThemedText style={styles.text}>{message}</ThemedText>
     </View>
   );
