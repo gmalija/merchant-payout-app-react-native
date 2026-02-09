@@ -12,5 +12,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^msw/node$': '<rootDir>/node_modules/msw/lib/node/index.js',
+    '^screen-security$': '<rootDir>/modules/screen-security/__mocks__/index.ts',
   },
 };
