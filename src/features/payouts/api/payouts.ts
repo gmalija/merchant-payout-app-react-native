@@ -1,10 +1,51 @@
 import { API_BASE_URL } from '@/shared/constants';
 import type { CreatePayoutRequest, PayoutResponse } from '@/shared/types/api';
 import { getDeviceId } from '@/shared/utils/device';
+import {
+  authenticateWithBiometrics,
+  BiometricErrorType,
+} from '@/shared/utils/biometric';
 
+/**
+ * Threshold amount for requiring biometric authentication
+ * 100000 = £1,000.00 or €1,000.00 (in lowest denomination)
+ */
+const BIOMETRIC_THRESHOLD = 100000;
+
+/**
+ * Create a new payout
+ * Automatically includes device ID in the request
+ * Requires biometric authentication for amounts >= £1,000.00 (or equivalent)
+ */
 export async function createPayout(
   request: CreatePayoutRequest
 ): Promise<PayoutResponse> {
+
+  // Check if biometric authentication is required
+  if (request.amount >= BIOMETRIC_THRESHOLD) {
+    const authResult = await authenticateWithBiometrics();
+
+    if (!authResult.success) {
+      // If biometrics not enrolled, throw specific error
+      if (authResult.error?.type === BiometricErrorType.NOT_ENROLLED) {
+        throw new Error(
+          'Biometric authentication is required for payouts over £1,000.00. Please enable Face ID, Touch ID, or Fingerprint authentication in your device Settings.'
+        );
+      }
+
+      // If biometrics not available
+      if (authResult.error?.type === BiometricErrorType.NOT_AVAILABLE) {
+        throw new Error(
+          'Biometric authentication is required for payouts over £1,000.00, but is not available on this device.'
+        );
+      }
+
+      // If authentication failed or was cancelled
+      throw new Error(
+        authResult.error?.message || 'Biometric authentication failed'
+      );
+    }
+  }
 
   const deviceId = getDeviceId();
 
