@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   text_secondary: {
-    color: Colors.white,
+    color: Colors['gray'][900],
   },
   text_outline: {
     color: Colors.primary,

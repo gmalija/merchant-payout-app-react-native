@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PayoutForm } from './payout-form';
 import { PayoutConfirmationModal } from './payout-confirmation-modal';
 import { PayoutSuccess, PayoutError, InsufficientFunds } from './payout-result';
 import { useCreatePayout } from '../hooks/use-create-payout';
 import { useMerchantData } from '@/features/merchant';
 import type { Currency } from '@/shared/types/api';
+import { Alert } from 'react-native';
+import * as ScreenSecurity from 'screen-security';
 
 type FlowState = 'form' | 'confirming' | 'success' | 'error' | 'insufficient_funds';
 
@@ -21,6 +23,21 @@ export function PayoutFlow() {
 
   const createPayout = useCreatePayout();
   const { data: merchantData } = useMerchantData();
+
+  // Setup screenshot detection listener
+  useEffect(() => {
+    const subscription = ScreenSecurity.addScreenshotListener(() => {
+      Alert.alert(
+        'Screenshot Detected',
+        'Please keep your financial data private and secure. Avoid sharing screenshots of sensitive payment information.',
+        [{ text: 'OK', style: 'default' }]
+      );
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   // Handle form submission (show confirmation modal)
   const handleFormSubmit = (data: PayoutData) => {

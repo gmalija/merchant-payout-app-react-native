@@ -5,5 +5,6 @@
   },
   "android": {
     "modules": ["expo.modules.screensecurity.ScreenSecurityModule"]
-  }
+  },
+  "plugin": "./app.plugin.js"
 }
