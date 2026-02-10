@@ -108,12 +108,17 @@ describe('Payout Validation Schemas', () => {
     });
 
     it('should reject IBANs that are too short', () => {
-      expect(() => ibanSchema.parse('GB82WEST')).toThrow('IBAN must be at least 15 characters');
+      expect(() => ibanSchema.parse('GB82WEST')).toThrow('Invalid IBAN format');
+    });
+
+    it('should reject IBANs with wrong length for country', () => {
+      // GB requires 22 chars, this has only 18
+      expect(() => ibanSchema.parse('GB82WEST1234567890')).toThrow('Invalid IBAN length for GB');
     });
 
     it('should reject IBANs that are too long', () => {
       const longIban = 'GB82' + 'A'.repeat(35);
-      expect(() => ibanSchema.parse(longIban)).toThrow('IBAN must be at most 34 characters');
+      expect(() => ibanSchema.parse(longIban)).toThrow('Invalid IBAN format');
     });
 
     it('should reject IBANs with invalid format', () => {
@@ -125,6 +130,17 @@ describe('Payout Validation Schemas', () => {
     it('should reject IBANs with special characters', () => {
       expect(() => ibanSchema.parse('GB82-WEST-12345698765432')).toThrow('Invalid IBAN format');
       expect(() => ibanSchema.parse('GB82_WEST_12345698765432')).toThrow('Invalid IBAN format');
+    });
+
+    it('should reject IBANs with invalid checksum', () => {
+      // GB82 with checksum changed to 00 (invalid)
+      expect(() => ibanSchema.parse('GB00WEST12345698765432')).toThrow('Invalid IBAN checksum');
+      // FR14 with checksum changed to 00 (invalid)
+      expect(() => ibanSchema.parse('FR0020041010050500013M02606')).toThrow('Invalid IBAN checksum');
+    });
+
+    it('should reject IBANs with unknown country code', () => {
+      expect(() => ibanSchema.parse('XX82WEST12345698765432')).toThrow('Unknown country code');
     });
   });
 
