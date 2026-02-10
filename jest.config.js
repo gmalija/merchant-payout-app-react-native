@@ -5,8 +5,9 @@ module.exports = {
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   collectCoverageFrom: [
-    'app/**/*.{ts,tsx}',
-    'components/**/*.{ts,tsx}',
+    'src/**/*.{ts,tsx}',
+    '!src/**/__tests__/**',
+    '!src/**/*.test.{ts,tsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
   ],
