@@ -2,14 +2,7 @@
  * Payout Validation Schemas using Zod
  */
 import { z } from 'zod';
-import { normalizeIban } from '@/shared/utils';
-
-/**
- * IBAN validation regex
- * Format: 2 letters (country) + 2 digits (check) + up to 30 alphanumeric characters
- * Examples: FR1420041010050500013M02606, GB82WEST12345698765432
- */
-const IBAN_REGEX = /^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/;
+import { normalizeIban, validateIban } from '@/shared/utils';
 
 /**
  * Currency enum schema
@@ -34,18 +27,27 @@ export const amountSchema = z
 
 /**
  * IBAN validation schema
+ * Uses comprehensive validation including:
+ * - Structure validation
+ * - Country-specific length validation
+ * - MOD-97 checksum validation
  */
 export const ibanSchema = z
   .string({
     message: 'IBAN must be a string',
   })
+  .min(1, 'IBAN is required')
   .transform(normalizeIban) // Normalize first: uppercase and remove spaces
   .pipe(
-    z
-      .string()
-      .min(15, 'IBAN must be at least 15 characters')
-      .max(34, 'IBAN must be at most 34 characters')
-      .regex(IBAN_REGEX, 'Invalid IBAN format. Must start with 2 letters followed by 2 digits')
+    z.string().superRefine((iban, ctx) => {
+      const result = validateIban(iban);
+      if (!result.valid) {
+        ctx.addIssue({
+          code: 'custom',
+          message: result.error || 'Invalid IBAN',
+        });
+      }
+    })
   );
 
 /**
